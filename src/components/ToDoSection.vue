@@ -1,41 +1,39 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const newTask = ref('') // for 1 task
-const tasks = ref([]) // array for all tasks
+const newTask = ref('')
+const tasks = ref([])
 
-// add task
+// ⚠️ Для ID лучше использовать uuid вместо Date.now(). При быстром добавлении задач может кинуть ошибку
 const addTask = () => {
   if (newTask.value.trim()) {
-    // delete spaces
     tasks.value.push({
-      // add to array new task
-      id: Date.now(), // create id ??? (but why)
-      text: newTask.value.trim(), // add value of input to the 'text'
-      completed: false, // mark that task hasn't completed yet
+      id: Date.now(),
+      text: newTask.value.trim(),
+      completed: false,
     })
-    newTask.value = '' // clear input
+    newTask.value = ''
   }
 }
 
-// remove
 const removeTask = (id) => {
   tasks.value = tasks.value.filter((task) => task.id !== id)
 }
 
-// ??
+// ⚠️ Если не реализовано — не пушим. На работе тоже, иначе очень быстро засорим код
 const moveTaskToCompleted = (task) => {}
 
-// active tasks
-const activeTasks = computed(() => tasks.value.filter((task) => !task.completed)) // filter these tasks which hasn't been completed
+const activeTasks = computed(() => tasks.value.filter((task) => !task.completed))
 
-// completed tasks
-const completedTasks = computed(() => tasks.value.filter((task) => task.completed)) // filter these tasks which has been completed
+const completedTasks = computed(() => tasks.value.filter((task) => task.completed))
 </script>
 
 <template>
   <section class="to-do__section">
     <div class="to-do__wrapper">
+      <!-- ⚠️ input-wrapper - название не соответствует содержанию. Лучше назвать блок "to-do__create-block" или как-то так -->
+      <!-- ⚠️ Плюс названо не по БЭМ -->
+      <!-- ⚠️ Лучше вынести в отдельный компонент -->
       <div class="input-wrapper">
         <input class="to-do__input" placeholder="Add a new task" type="text" v-model="newTask" />
         <button class="to-do__add-btn" @click="addTask">
@@ -45,9 +43,14 @@ const completedTasks = computed(() => tasks.value.filter((task) => task.complete
 
       <h2 class="to-do__subtitle">Tasks to do - {{ tasks.length }}</h2>
       <ul class="to-do__list">
+        <!-- ⚠️ Лучше переименовать класс для консистентности .to-do__task  -->
+        <!-- ⚠️ Вынести в отдельный компонент  -->
         <li class="to-do__item" v-for="task in activeTasks" :key="task.id">
           <span class="to-do__task--active">{{ task.text }}</span>
+          <!-- ⚠️ не по БЭМ -->
+          <!-- ⚠️ button-wrapper → to-do__controls/to-do__buttons -->
           <div class="button-wrapper">
+            <!-- ⚠️ Вынести в отдельный компонент  -->
             <label class="custom-checkbox">
               <input
                 type="checkbox"
@@ -66,6 +69,7 @@ const completedTasks = computed(() => tasks.value.filter((task) => task.complete
 
       <h2 class="to-do__subtitle">Done - {{ completedTasks.length }}</h2>
       <ul class="to-do__list" v-if="completedTasks.length > 0">
+        <!-- ⚠️ Вынести в отдельный компонент. Лучше переиспользуй компонент, который создашь выше для обычной тудушки  -->
         <li class="to-do__item" v-for="task in completedTasks" :key="task.id">
           <span class="to-do__task--completed">{{ task.text }}</span>
         </li>
@@ -75,6 +79,7 @@ const completedTasks = computed(() => tasks.value.filter((task) => task.complete
 </template>
 
 <style lang="scss">
+// ⚠️ переменные не храним в компонентах (за редкими исключениями). Выносим в отдельный файл assets/variablse.scss
 $background: #0d0714;
 $subtitle: #ffffff;
 $input-text: #777777;
@@ -107,11 +112,11 @@ $item-background: #15101c;
 
   &__input {
     min-width: 381px;
-    widows: 100%;
-    height: 40px;
+    widows: 100%; // ⚠️ Опечатка? widows → width
+    height: 40px;  // ⚠️ Фиксированная высота для инпутов это плохо - лучше использовать padding
     padding-left: 15px;
     background-color: transparent;
-    border: solid 1px $input-border;
+    border: solid 1px $input-border; // ⚠️Стандартный порядок → border: 1px solid color
     border-radius: 10px;
     color: $input-text;
   }
@@ -144,7 +149,7 @@ $item-background: #15101c;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 16px; // ⚠️ Лучше использовать gap в родительском grid
     padding-left: 5%;
     padding-right: 5%;
     min-height: 75px;
@@ -209,6 +214,7 @@ $item-background: #15101c;
   background-position: center;
 }
 
+// ⚠️ Вынести в глобальные стили
 .visually-hidden {
   position: absolute;
   width: 1px;
