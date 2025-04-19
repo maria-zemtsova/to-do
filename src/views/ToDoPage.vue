@@ -11,6 +11,7 @@ import ToDoSection from '../components/ToDoSection.vue'
 </template>
 
 <style lang="scss">
+// ⚠️ переменные не храним в компонентах (за редкими исключениями). Выносим в отдельный файл assets/variablse.scss
 $background: #c8dec8;
 $text-color: #0d0714;
 
@@ -25,6 +26,8 @@ $text-color: #0d0714;
   color: $text-color;
 
   &__title {
+    // ⚠️ не используем дробные значения. Все % и px значения в идеале должны быть кратны 2
+    // ⚠️ Ширину и отступы по возможности задаем в px значениях. Для адаптива эти значения будем менять. Резиновую верстку не делаем
     width: 31.3%;
     margin-left: 7.5%;
     margin-bottom: 11px;
