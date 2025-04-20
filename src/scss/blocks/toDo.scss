@@ -1,0 +1,169 @@
+@use '../variables' as *;
+
+.to-do {
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  min-height: 1024px;
+  padding-top: 130px;
+  background-color: $background-page;
+  font-family: 'Inter', sans-serif;
+  color: $text-color;
+
+  &__title {
+    width: 451px;
+    margin-left: 108px;
+    margin-bottom: 11px;
+    font-size: 96px;
+    font-weight: bold;
+  }
+
+  &__text {
+    width: 314px;
+    margin-left: 108px;
+    font-size: 60px;
+  }
+
+  &__section {
+    max-width: 983px;
+    min-height: 796px;
+    background-color: $background-section;
+    border-radius: 80px;
+    position: relative;
+    left: 505px;
+  }
+
+  &__wrapper {
+    width: 983px;
+    max-width: 432px;
+    margin: 0 auto;
+    padding-top: 74px;
+    padding-bottom: 74px;
+  }
+
+  &__subtitle {
+    color: $subtitle;
+    font-size: 16px;
+    margin-bottom: 17px;
+  }
+
+  //ToDoCreate.vue
+
+  &__create-block {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 59px;
+  }
+
+  &__input {
+    min-width: 381px;
+    padding-top: 11px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    background-color: transparent;
+    border: 1px solid $input-border;
+    border-radius: 10px;
+    color: $input-text;
+  }
+
+  &__add-btn {
+    width: 40px;
+    height: 40px;
+    background-color: $task-active;
+    background-image: url(/src/assets/Plus.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    border-radius: 10px;
+  }
+
+  // ToDoTask.vue
+
+  &__list {
+    width: 100%;
+    display: grid;
+    row-gap: 16px;
+    min-height: 100px;
+    padding: 0;
+    margin-bottom: 60px;
+    list-style: none;
+  }
+
+  &__task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    min-height: 75px;
+    max-height: 75px;
+    background-color: $item-background;
+    border-radius: 10px;
+  }
+
+  &__task-item--completed {
+    color: $task-completed;
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+
+  &__task-content {
+    color: $task-active;
+    font-size: 16px;
+  }
+
+  &__task-content--completed {
+    color: $task-completed;
+  }
+
+  &__task--completed {
+    color: $task-completed;
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+
+  &__task-controls--completed {
+    display: none;
+  }
+
+  &__task-remove-btn {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    background-image: url(/src/assets/Vector.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+  }
+
+  // ToDoCheckbox.vue
+
+  &__checkbox {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__checkbox-input {
+    display: none;
+  }
+  &__checkbox-checkmark {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+  }
+
+  &__checkbox-checkmark::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 30px;
+    height: 30px;
+    padding-top: 34px;
+    background-color: transparent;
+    background-image: url(/src/assets/Check.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
