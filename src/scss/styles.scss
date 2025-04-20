@@ -1,0 +1,8 @@
+//variables
+@use 'variables.scss' as *;
+
+// global
+@use 'global.scss';
+
+//blocks
+@use 'blocks/toDo.scss';
