@@ -42,10 +42,10 @@ const handleRemove = () => {
       :class="{ 'to-do__task-controls--completed': task.completed }"
     >
       <ToDoCheckbox
-        :checked="task.completed"
-        @change="handleCheckboxChange"
         class="to-do__task-checkbox"
         aria-label="Toggle task completion"
+        :checked="task.completed"
+        @change="handleCheckboxChange"
       />
       <button class="to-do__task-remove-btn" @click="handleRemove" aria-label="Remove task">
         <span class="visually-hidden">Remove</span>
@@ -53,3 +53,65 @@ const handleRemove = () => {
     </div>
   </li>
 </template>
+
+<style lang="scss">
+@use '/src/scss/variables.scss' as *;
+.to-do {
+  &__list {
+    width: 100%;
+    display: grid;
+    row-gap: 16px;
+    min-height: 100px;
+    padding: 0;
+    margin-bottom: 60px;
+    list-style: none;
+  }
+
+  &__task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    min-height: 75px;
+    max-height: 75px;
+    background-color: $item-background;
+    border-radius: 10px;
+  }
+
+  &__task-item--completed {
+    color: $task-completed;
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+
+  &__task-content {
+    color: $task-active;
+    font-size: 16px;
+  }
+
+  &__task-content--completed {
+    color: $task-completed;
+  }
+
+  &__task--completed {
+    color: $task-completed;
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+
+  &__task-controls--completed {
+    display: none;
+  }
+
+  &__task-remove-btn {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    background-image: url(/src/assets/Vector.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+  }
+}
+</style>

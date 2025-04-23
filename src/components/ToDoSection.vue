@@ -62,3 +62,56 @@ const completedTasks = computed(() => tasks.value.filter((task) => task.complete
     </div>
   </section>
 </template>
+
+<style lang="scss">
+@use '/src/scss/variables.scss' as *;
+.to-do {
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  min-height: 1024px;
+  padding-top: 130px;
+  background-color: $background-page;
+  font-family: 'Inter', sans-serif;
+  color: $text-color;
+
+  &__title {
+    width: 452px;
+    margin-left: 108px;
+    margin-bottom: 12px;
+    font-size: 96px;
+    font-weight: bold;
+  }
+
+  &__text {
+    width: 314px;
+    margin-left: 108px;
+    font-size: 60px;
+  }
+
+  &__section {
+    max-width: 984px;
+    min-height: 796px;
+    background-color: $background-section;
+    border-radius: 80px;
+    position: relative;
+    left: 506px;
+  }
+
+  &__wrapper {
+    width: 984px;
+    max-width: 432px;
+    margin: 0 auto;
+    padding-top: 74px;
+    padding-bottom: 74px;
+  }
+
+  &__subtitle {
+    color: $subtitle;
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+}
+</style>
