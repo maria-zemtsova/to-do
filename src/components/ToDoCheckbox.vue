@@ -4,6 +4,10 @@ defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const handleChange = (event) => {
+  emit('update:modelValue', event.target.checked)
+}
 </script>
 
 <template>
@@ -12,14 +16,13 @@ const emit = defineEmits(['update:modelValue'])
       class="to-do__checkbox-input"
       type="checkbox"
       :checked="modelValue"
-      @change="emit('update:modelValue', $event.target.checked)"
+      @change="handleChange"
     />
     <span class="to-do__checkbox-checkmark"></span>
   </label>
 </template>
 
 <style lang="scss">
-@use '/src/scss/variables.scss' as *;
 .to-do {
   &__checkbox {
     width: 30px;

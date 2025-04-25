@@ -11,7 +11,6 @@ import ToDoSection from '../components/ToDoSection.vue'
 </template>
 
 <style lang="scss">
-@use '/src/scss/variables.scss' as *;
 .to-do {
   font-family: 'Inter', sans-serif;
   overflow: hidden;

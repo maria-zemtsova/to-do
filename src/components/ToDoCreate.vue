@@ -25,10 +25,10 @@ const handleKeyPress = (e) => {
 <template>
   <div class="to-do__create-block">
     <input
+      v-model="inputValue"
       class="to-do__input"
       type="text"
       placeholder="Add a new task"
-      v-model="inputValue"
       @keyup.enter="handleKeyPress"
     />
     <button class="to-do__add-btn" @click="handleAdd" :disabled="!inputValue.trim()">
@@ -38,7 +38,6 @@ const handleKeyPress = (e) => {
 </template>
 
 <style lang="scss">
-@use '/src/scss/variables.scss' as *;
 .to-do {
   &__create-block {
     display: flex;

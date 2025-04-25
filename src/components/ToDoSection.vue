@@ -64,7 +64,6 @@ const completedTasks = computed(() => tasks.value.filter((task) => task.complete
 </template>
 
 <style lang="scss">
-@use '/src/scss/variables.scss' as *;
 .to-do {
   font-family: 'Inter', sans-serif;
   overflow: hidden;

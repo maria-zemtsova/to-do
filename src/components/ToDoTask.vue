@@ -55,7 +55,6 @@ const handleRemove = () => {
 </template>
 
 <style lang="scss">
-@use '/src/scss/variables.scss' as *;
 .to-do {
   &__list {
     width: 100%;
