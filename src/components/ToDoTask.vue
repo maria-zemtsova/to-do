@@ -1,18 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
-import ToDoCheckbox from './ToDoCheckbox.vue'
+import { useTodoStore } from '@/stores/toDoStore'
+import ToDoCheckbox from './ToDoCheckbox1.vue'
 
-const props = defineProps({
-  task: {
-    type: Object,
-    required: true,
-    validator: (task) => {
-      return 'id' in task && 'text' in task && 'completed' in task
-    },
-  },
-})
+interface Task {
+  id: string
+  text: string
+  completed: boolean
+}
 
-const emit = defineEmits(['update', 'remove'])
+const props = defineProps<{
+  task: Task
+}>()
+
+const todoStore = useTodoStore()
 
 const textClasses = computed(() => [
   'to-do__task-text',
@@ -22,12 +23,12 @@ const textClasses = computed(() => [
   },
 ])
 
-const handleCheckboxChange = (completed) => {
-  emit('update', { ...props.task, completed })
+const handleCheckboxChange = (isCompleted: boolean) => {
+  todoStore.updateTask({ ...props.task, completed: isCompleted })
 }
 
 const handleRemove = () => {
-  emit('remove', props.task.id)
+  todoStore.removeTask(props.task.id)
 }
 </script>
 
@@ -44,8 +45,8 @@ const handleRemove = () => {
       <ToDoCheckbox
         class="to-do__task-checkbox"
         aria-label="Toggle task completion"
-        :checked="task.completed"
-        @change="handleCheckboxChange"
+        v-model="task.completed"
+        @update:modelValue="handleCheckboxChange"
       />
       <button class="to-do__task-remove-btn" @click="handleRemove" aria-label="Remove task">
         <span class="visually-hidden">Remove</span>

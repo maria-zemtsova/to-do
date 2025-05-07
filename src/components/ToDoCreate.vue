@@ -1,12 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps(['modelValue'])
-const emit = defineEmits(['update:modelValue', 'add-task'])
+const props = defineProps<{
+  modelValue: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+  (e: 'add-task'): void
+}>()
 
 const inputValue = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
+  set: (value: string) => emit('update:modelValue', value),
 })
 
 const handleAdd = () => {
@@ -15,7 +21,7 @@ const handleAdd = () => {
   }
 }
 
-const handleKeyPress = (e) => {
+const handleKeyPress = (e: KeyboardEvent) => {
   if (e.key === 'Enter') {
     handleAdd()
   }

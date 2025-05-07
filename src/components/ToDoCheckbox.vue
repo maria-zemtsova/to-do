@@ -1,23 +1,22 @@
-<script setup>
-defineProps({
-  modelValue: { type: Boolean, default: false },
+<script setup lang="ts">
+import { computed } from 'vue'
+const props = defineProps<{
+  modelValue: boolean
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void
+}>()
+
+const checked = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
 })
-
-const emit = defineEmits(['update:modelValue'])
-
-const handleChange = (event) => {
-  emit('update:modelValue', event.target.checked)
-}
 </script>
 
 <template>
   <label class="to-do__checkbox">
-    <input
-      class="to-do__checkbox-input"
-      type="checkbox"
-      :checked="modelValue"
-      @change="handleChange"
-    />
+    <input class="to-do__checkbox-input" type="checkbox" v-model="checked" />
     <span class="to-do__checkbox-checkmark"></span>
   </label>
 </template>
