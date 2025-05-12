@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useTodoStore } from '@/stores/toDoStore'
-import ToDoCheckbox from './ToDoCheckbox1.vue'
+import ToDoCheckbox from './ToDoCheckbox.vue'
 
 interface Task {
   id: string
@@ -11,6 +11,7 @@ interface Task {
 
 const props = defineProps<{
   task: Task
+  disabled?: boolean
 }>()
 
 const todoStore = useTodoStore()
@@ -24,16 +25,26 @@ const textClasses = computed(() => [
 ])
 
 const handleCheckboxChange = (isCompleted: boolean) => {
-  todoStore.updateTask({ ...props.task, completed: isCompleted })
+  if (!props.disabled) {
+    todoStore.updateTask({ ...props.task, completed: isCompleted })
+  }
 }
 
 const handleRemove = () => {
-  todoStore.removeTask(props.task.id)
+  if (!props.disabled) {
+    todoStore.removeTask(props.task.id)
+  }
 }
 </script>
 
 <template>
-  <li class="to-do__task-item" :class="{ 'to-do__task-item--completed': task.completed }">
+  <li
+    class="to-do__task-item"
+    :class="{
+      'to-do__task-item--completed': task.completed,
+      'to-do__task-item--disabled': disabled,
+    }"
+  >
     <div class="to-do__task-content" :class="{ 'to-do__task-content--completed': task.completed }">
       <span :class="textClasses">{{ task.text }}</span>
     </div>
@@ -43,12 +54,11 @@ const handleRemove = () => {
       :class="{ 'to-do__task-controls--completed': task.completed }"
     >
       <ToDoCheckbox
-        class="to-do__task-checkbox"
-        aria-label="Toggle task completion"
-        v-model="task.completed"
+        :modelValue="task.completed"
         @update:modelValue="handleCheckboxChange"
+        :disabled="disabled"
       />
-      <button class="to-do__task-remove-btn" @click="handleRemove" aria-label="Remove task">
+      <button class="to-do__task-remove-btn" @click="handleRemove" :disabled="disabled">
         <span class="visually-hidden">Remove</span>
       </button>
     </div>

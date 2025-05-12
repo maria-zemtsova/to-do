@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { useInputValidation } from '../composables/useInputValidation'
+
+const { inputValue, isDirty, isValid } = useInputValidation()
 
 const props = defineProps<{
   modelValue: string
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
-  (e: 'add-task'): void
+  (e: 'add-task', text: string): void
 }>()
 
-const inputValue = computed({
-  get: () => props.modelValue,
-  set: (value: string) => emit('update:modelValue', value),
-})
-
 const handleAdd = () => {
-  if (inputValue.value.trim()) {
-    emit('add-task')
+  isDirty.value = true
+  if (isValid.value) {
+    emit('add-task', inputValue.value)
+    inputValue.value = ''
+    isDirty.value = false
   }
 }
 

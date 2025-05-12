@@ -1,27 +1,14 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
+import { onMounted, computed } from 'vue'
 import ToDoCreate from './ToDoCreate.vue'
 import ToDoTask from './ToDoTask.vue'
-import { useTodoStore } from '@/stores/todoStore'
-
-interface Task {
-  id: string
-  text: string
-  completed: boolean
-}
+import { useTodoStore } from '@/stores/toDoStore'
 
 const todoStore = useTodoStore()
 
-const newTask = ref<string>('')
-const tasks = ref([])
-
-const addTask = () => {
-  if (newTask.value.trim()) {
-    todoStore.addTask(newTask.value.trim())
-    newTask.value = ''
-  }
-}
+onMounted(async () => {
+  await todoStore.loadTasks()
+})
 
 const activeTasks = computed(() => todoStore.activeTasks)
 const completedTasks = computed(() => todoStore.completedTasks)
@@ -30,16 +17,26 @@ const completedTasks = computed(() => todoStore.completedTasks)
 <template>
   <section class="to-do__section">
     <div class="to-do__wrapper">
-      <ToDoCreate v-model="newTask" @add-task="addTask" />
+      <ToDoCreate @add-task="todoStore.addTask" />
 
       <h2 class="to-do__subtitle">Tasks to do - {{ activeTasks.length }}</h2>
       <ul class="to-do__list" v-if="activeTasks.length > 0">
-        <ToDoTask v-for="task in activeTasks" :key="task.id" :task="task" />
+        <ToDoTask
+          v-for="task in activeTasks"
+          :key="task.id"
+          :task="task"
+          :disabled="todoStore.isLoading"
+        />
       </ul>
 
       <h2 class="to-do__subtitle">Done - {{ completedTasks.length }}</h2>
       <ul class="to-do__list" v-if="completedTasks.length > 0">
-        <ToDoTask v-for="task in completedTasks" :key="task.id" :task="task" />
+        <ToDoTask
+          v-for="task in completedTasks"
+          :key="task.id"
+          :task="task"
+          :disabled="todoStore.isLoading"
+        />
       </ul>
     </div>
   </section>
